@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Expandable Recyclerview</string>
+    <string name="image_expand">Image Expand</string>
+
+    <item name="item_parent_complaint_id" type="id" />
+    <item name="item_child_complaint_id" type="id" />
+    <item name="item_grandchild_complaint_id" type="id" />
+</resources>
