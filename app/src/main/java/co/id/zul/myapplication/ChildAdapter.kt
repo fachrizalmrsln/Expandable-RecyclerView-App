@@ -2,13 +2,17 @@ package co.id.zul.myapplication
 
 import android.view.View
 import android.widget.TextView
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.mikepenz.fastadapter.ClickListener
+import com.mikepenz.fastadapter.IClickable
 import com.mikepenz.fastadapter.ISubItem
 import com.mikepenz.fastadapter.expandable.items.AbstractExpandableItem
 
 class ChildAdapter(private val description: DataModel) :
     AbstractExpandableItem<ChildAdapter.ViewHolder>(),
-    ISubItem<ChildAdapter.ViewHolder> {
+    ISubItem<ChildAdapter.ViewHolder>,
+    IClickable<ChildAdapter> {
 
     override val layoutRes: Int
         get() = R.layout.item_child
@@ -36,5 +40,22 @@ class ChildAdapter(private val description: DataModel) :
         val textViewTitle: TextView = view.findViewById(R.id.textView_title_item_list)
         val textViewSubtitle: TextView = view.findViewById(R.id.textView_subtitle_item_list)
     }
+
+    override var onItemClickListener: ClickListener<ChildAdapter>? = { v, adapter, item, position ->
+        if (item.subItems.isNotEmpty()) {
+            v?.findViewById<View>(R.id.imageView_expand_more_item_child)?.let {
+                if (item.isExpanded) {
+                    ViewCompat.animate(it).rotation(180f).start()
+                } else {
+                    ViewCompat.animate(it).rotation(0f).start()
+                }
+            }
+        }
+        true
+    }
+
+    override var onPreItemClickListener: ClickListener<ChildAdapter>?
+        get() = null
+        set(value) {}
 
 }

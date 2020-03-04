@@ -1,6 +1,8 @@
 package co.id.zul.myapplication
 
 import android.os.Bundle
+import android.os.PersistableBundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -8,6 +10,7 @@ import com.mikepenz.fastadapter.GenericItem
 import com.mikepenz.fastadapter.adapters.FastItemAdapter
 import com.mikepenz.fastadapter.adapters.GenericFastItemAdapter
 import com.mikepenz.fastadapter.expandable.getExpandableExtension
+import com.mikepenz.fastadapter.select.getSelectExtension
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         setupRecyclerView()
+        fastItemAdapter.withSavedInstanceState(savedInstanceState)
     }
 
     private fun setupRecyclerView() {
@@ -35,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
         setupData()
 
-        fastItemAdapter.getExpandableExtension().isOnlyOneExpandedItem = true
+        fastItemAdapter.getExpandableExtension()
 
         recyclerView.apply {
             layoutManager =
@@ -194,7 +198,7 @@ class MainActivity : AppCompatActivity() {
             16,
             DataModel(
                 "02-03-2020",
-                "Title 7",
+                "Title 17",
                 "Subtitle 17",
                 "Description 17"
             )
@@ -203,7 +207,7 @@ class MainActivity : AppCompatActivity() {
             17,
             DataModel(
                 "02-03-2020",
-                "Title 8",
+                "Title 18",
                 "Subtitle 18",
                 "Description 18"
             )
@@ -226,7 +230,6 @@ class MainActivity : AppCompatActivity() {
                 "Description 20"
             )
         )
-
         initializeData(listData)
     }
 
@@ -249,6 +252,11 @@ class MainActivity : AppCompatActivity() {
             listForChild.clear()
         }
         fastItemAdapter.add(genericList)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+        val state = fastItemAdapter.saveInstanceState(outState)
+        super.onSaveInstanceState(state)
     }
 
 }
